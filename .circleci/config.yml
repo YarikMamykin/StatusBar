@@ -1,0 +1,139 @@
+# See: https://circleci.com/docs/configuration-reference
+version: 2.1
+
+executors:
+  archexecutor:
+    docker:
+      - image: ym07/windowmanagerbase:latest
+        auth:
+          username: ym07
+          password: $DOCKERHUB_TOKEN
+    working_directory: /workspace
+
+jobs:
+  check_version_increment:
+    executor: archexecutor
+    steps:
+      - checkout
+      - run:
+          command: export TAG=$(git tag --sort=version:refname | tail -1); export CURRENT_VERSION=$(cat CMakeLists.txt | grep VERSION | sed -n 's/.*VERSION \([0-9]\+\.[0-9]\+\.[0-9]\+\).*/\1/p'); if [ "$TAG" = "$CURRENT_VERSION" ]; then exit 1; fi;
+  lint:
+    executor: archexecutor
+    steps:
+      - checkout
+      - run:
+          command: find ./src/ -iname "*.h" -o -iname "*.cpp" | xargs clang-format --dry-run -Werror
+      # - run:
+      # command: find ./tests/ -iname "*.h" -o -iname "*.cpp" | xargs clang-format --dry-run -Werror
+  build:
+    executor: archexecutor
+    steps:
+      - checkout
+      - run:
+          command: cmake -S . -B DEBUG -DCMAKE_BUILD_TYPE=DEBUG -DBUILD_TESTS=TRUE -DCMAKE_INSTALL_PREFIX=DEBUG
+      - run:
+          command: cmake --build DEBUG --parallel
+
+      - persist_to_workspace:
+          root: /workspace
+          paths:
+            - DEBUG/*
+  build-release:
+    executor: archexecutor
+    steps:
+      - checkout
+      - run:
+          command: cmake -S . -B RELEASE -DCMAKE_BUILD_TYPE=RELEASE -DBUILD_TESTS=TRUE -DCMAKE_INSTALL_PREFIX=RELEASE
+      - run:
+          command: cmake --build RELEASE --parallel
+      - run:
+          command: cmake --install RELEASE --strip
+
+      - persist_to_workspace:
+          root: /workspace
+          paths:
+            - RELEASE/*
+
+  build-release-without-tests:
+    executor: archexecutor
+    steps:
+      - checkout
+      - run:
+          command: cmake -S . -B RELEASE -DCMAKE_BUILD_TYPE=RELEASE -DBUILD_TESTS=FALSE -DCMAKE_INSTALL_PREFIX=RELEASE
+      - run:
+          command: cmake --build RELEASE --parallel
+      - run:
+          command: cmake --install RELEASE --strip
+
+  tests:
+    executor: archexecutor
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /workspace
+      - run:
+          command: ctest --test-dir DEBUG/tests --verbose
+
+  tests-release:
+    executor: archexecutor
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /workspace
+      - run:
+          command: ctest --test-dir RELEASE/tests --verbose
+
+  update_tag:
+    executor: archexecutor
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:n1lZyRkUdjzLf1zlSQYvzcUpa5WlJGFXr4UBfN7mnDQ"
+      - checkout
+      - attach_workspace:
+          at: /workspace
+      - run:
+          command: git config --global user.email "ymamykin@gmail.com"
+      - run:
+          command: git config --global user.name "YarikMamykin"
+      - run:
+          command: export NEW_TAG=$(cat CMakeLists.txt | grep VERSION | sed -n 's/.*VERSION \([0-9]\+\.[0-9]\+\.[0-9]\+\).*/\1/p'); git tag -a $NEW_TAG -m $NEW_TAG; git push origin --tags;
+
+workflows:
+  statusbar:
+    jobs:
+      - check_version_increment:
+          filters:
+            branches:
+              ignore: main
+      - lint:
+          filters:
+            branches:
+              ignore:
+                - main
+      - build:
+          filters:
+            branches:
+              ignore:
+                - main
+      # - tests:
+      # requires:
+      # - build
+      # filters:
+      # branches:
+      # ignore:
+      # - main
+      - build-release
+      - build-release-without-tests:
+          filters:
+            branches:
+              only:
+                - main
+      # - tests-release:
+      # requires:
+      # - build-release
+      - update_tag:
+          filters:
+            branches:
+              only:
+                - main
