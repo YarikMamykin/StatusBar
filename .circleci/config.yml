@@ -88,7 +88,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "SHA256:n1lZyRkUdjzLf1zlSQYvzcUpa5WlJGFXr4UBfN7mnDQ"
+            - "SHA256:fFImZCmmcPq6AMFKXIA2hZ0uHMqv2QsW/0P2URERi28"
       - checkout
       - attach_workspace:
           at: /workspace
