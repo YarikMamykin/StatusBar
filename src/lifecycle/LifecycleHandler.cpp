@@ -11,7 +11,7 @@ namespace ymwm::lifecycle {
     }
 
     m_data_provider.reset(new ymwm::data::DataProvider());
-    m_window.reset(new ymwm::ui::StatusBarWindow());
+    m_window.reset(new ymwm::ui::StatusBarWindow(*m_data_provider));
   }
 
   int LifecycleHandler::run() noexcept {
@@ -24,8 +24,8 @@ namespace ymwm::lifecycle {
       return 0;
     }
 
-    while (not m_exit_requested) {
-      m_semaphor.wait();
+    while (not m_window->closed()) {
+      m_window->render();
     }
 
     return 0;
