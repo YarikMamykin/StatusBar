@@ -37,10 +37,11 @@ namespace ymwm::ui {
                              .color = Colors::Regular });
     m_renderer.render_icon(
         Icons::Cpu,
-        { .x = 500 + m_renderer.rendered_text_width(
-                         mock_cpudata, m_renderer.default_font_size()),
-          .y = 100,
-          .color = Colors::Regular });
+        {
+            .x = 500 + m_renderer.rendered_text_width(
+                           mock_cpudata, m_renderer.default_font_size()),
+            .y = 100,
+        });
     return m_renderer.rendered_text_width(mock_cpudata,
                                           m_renderer.default_font_size());
   }

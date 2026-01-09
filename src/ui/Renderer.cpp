@@ -4,6 +4,7 @@
 #include "Icons.h"
 
 #include <algorithm>
+#include <raylib.h>
 
 namespace ymwm::ui::prv {
   inline constexpr std::tuple<unsigned char*, std::size_t>
@@ -52,6 +53,8 @@ namespace ymwm::ui {
         Color{ 255, 0, 255, 255 };
     m_colors.at(static_cast<std::size_t>(Colors::Charged)) =
         Color{ 255, 255, 255, 255 };
+    m_colors.at(static_cast<std::size_t>(Colors::Delimiter)) =
+        Color{ 0, 0, 255, 255 };
 
     load_icons();
   }
@@ -71,8 +74,16 @@ namespace ymwm::ui {
 
   void Renderer::render_icon(Icons icon,
                              const RenderIconOptions& options) const noexcept {
-    const auto& color = raylib_color(options.color);
-    DrawTexture(raylib_icon(icon), options.x, options.y, color);
+    DrawTexture(
+        raylib_icon(icon), options.x, options.y, raylib_color(Colors::Regular));
+  }
+
+  void Renderer::render_line(const RenderLineOptions& options) const noexcept {
+    DrawLineEx(
+        { static_cast<float>(options.xs), static_cast<float>(options.ys) },
+        { static_cast<float>(options.xe), static_cast<float>(options.ye) },
+        options.width,
+        raylib_color(options.color));
   }
 
   int Renderer::rendered_text_width(const std::string& txt,

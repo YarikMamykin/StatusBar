@@ -19,6 +19,14 @@ namespace ymwm::ui {
   struct RenderIconOptions {
     int x{ 0 };
     int y{ 0 };
+  };
+
+  struct RenderLineOptions {
+    int xs{ 0 };
+    int ys{ 0 };
+    int xe{ 0 };
+    int ye{ 0 };
+    int width{ 0 };
     Colors color{ Colors::Regular };
   };
 
@@ -30,6 +38,7 @@ namespace ymwm::ui {
                      const RenderTextOptions& options) const noexcept;
     void render_icon(Icons icon,
                      const RenderIconOptions& options) const noexcept;
+    void render_line(const RenderLineOptions& options) const noexcept;
 
     int rendered_text_width(const std::string& txt,
                             int font_size) const noexcept;
@@ -50,7 +59,7 @@ namespace ymwm::ui {
     void load_icons() noexcept;
 
   private:
-    std::array<Color, 6ul> m_colors;
+    std::array<Color, 7ul> m_colors;
     std::array<Texture2D, 14ul> m_icons;
   };
 } // namespace ymwm::ui
