@@ -9,8 +9,14 @@ namespace ymwm::ui {
     LowBat,
     ChargingBat,
     Cpu,
+    WarningCpu,
+    AlertCpu,
     Ram,
-    Drive
+    WarningRam,
+    AlertRam,
+    Drive,
+    WarningDrive,
+    AlertDrive
   };
 }
 

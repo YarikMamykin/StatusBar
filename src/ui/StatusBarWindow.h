@@ -2,6 +2,7 @@
 
 #include "Renderer.h"
 #include "WindowHandler.h"
+#include "ui/DataRenderingVisitor.h"
 
 namespace ymwm::data {
   struct DataProvider;
@@ -20,5 +21,6 @@ namespace ymwm::ui {
     const data::DataProvider& m_data_provider;
     WindowHandler m_handler;
     Renderer m_renderer;
+    DataRenderingVisitor m_rendering_visitor;
   };
 } // namespace ymwm::ui

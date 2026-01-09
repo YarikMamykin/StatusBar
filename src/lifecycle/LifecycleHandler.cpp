@@ -15,14 +15,14 @@ namespace ymwm::lifecycle {
   }
 
   int LifecycleHandler::run() noexcept {
-    if (not m_semaphor.opened() and not m_semaphor.created()) {
-      return 1;
-    }
+    // if (not m_semaphor.opened() and not m_semaphor.created()) {
+    // return 1;
+    // }
 
-    if (m_semaphor.opened()) {
-      m_semaphor.post();
-      return 0;
-    }
+    // if (m_semaphor.opened()) {
+    // m_semaphor.post();
+    // return 0;
+    // }
 
     while (not m_window->closed()) {
       m_window->render();

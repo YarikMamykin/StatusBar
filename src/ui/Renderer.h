@@ -25,11 +25,16 @@ namespace ymwm::ui {
   struct Renderer {
     Renderer();
 
-    void render_background(Colors color);
-    void render_text(std::string&& txt, const RenderTextOptions& options);
-    void render_icon(Icons icon, const RenderIconOptions& options);
+    void render_background(Colors color) const noexcept;
+    void render_text(std::string&& txt,
+                     const RenderTextOptions& options) const noexcept;
+    void render_icon(Icons icon,
+                     const RenderIconOptions& options) const noexcept;
 
-    int rendered_text_width(const std::string& txt, int font_size);
+    int rendered_text_width(const std::string& txt,
+                            int font_size) const noexcept;
+
+    inline constexpr int default_font_size() const noexcept { return 32; }
 
     ~Renderer();
 
@@ -46,6 +51,6 @@ namespace ymwm::ui {
 
   private:
     std::array<Color, 6ul> m_colors;
-    std::array<Texture2D, 8ul> m_icons;
+    std::array<Texture2D, 14ul> m_icons;
   };
 } // namespace ymwm::ui
