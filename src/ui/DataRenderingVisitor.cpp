@@ -53,6 +53,13 @@ namespace ymwm::ui {
                              .y = 100 + m_renderer.default_font_size(),
                              .font_size = m_renderer.default_font_size(),
                              .color = Colors::Regular });
+    m_renderer.render_icon(
+        Icons::Ram,
+        {
+            .x = 500 + m_renderer.rendered_text_width(
+                           mock_ramdata, m_renderer.default_font_size()),
+            .y = 100 + m_renderer.default_font_size(),
+        });
     return m_renderer.rendered_text_width(mock_ramdata,
                                           m_renderer.default_font_size());
   }
@@ -64,6 +71,13 @@ namespace ymwm::ui {
                              .y = 100 + m_renderer.default_font_size() * 2,
                              .font_size = m_renderer.default_font_size(),
                              .color = Colors::Regular });
+    m_renderer.render_icon(
+        Icons::Drive,
+        {
+            .x = 500 + m_renderer.rendered_text_width(
+                           mock_drivedata, m_renderer.default_font_size()),
+            .y = 100 + m_renderer.default_font_size() * 2,
+        });
     return m_renderer.rendered_text_width(mock_drivedata,
                                           m_renderer.default_font_size());
   }

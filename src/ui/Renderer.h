@@ -43,7 +43,7 @@ namespace ymwm::ui {
     int rendered_text_width(const std::string& txt,
                             int font_size) const noexcept;
 
-    inline constexpr int default_font_size() const noexcept { return 32; }
+    inline constexpr int default_font_size() const noexcept { return 48; }
 
     ~Renderer();
 

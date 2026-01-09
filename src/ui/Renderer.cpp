@@ -74,8 +74,12 @@ namespace ymwm::ui {
 
   void Renderer::render_icon(Icons icon,
                              const RenderIconOptions& options) const noexcept {
-    DrawTexture(
-        raylib_icon(icon), options.x, options.y, raylib_color(Colors::Regular));
+    DrawTextureEx(
+        raylib_icon(icon),
+        { static_cast<float>(options.x), static_cast<float>(options.y) },
+        0.0,
+        0.75,
+        raylib_color(Colors::Regular));
   }
 
   void Renderer::render_line(const RenderLineOptions& options) const noexcept {
