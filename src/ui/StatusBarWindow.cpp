@@ -23,22 +23,31 @@ namespace ymwm::ui {
   void StatusBarWindow::render() noexcept {
     prv::DrawingContext ctx;
     m_renderer.render_background(Colors::Background);
-    std::visit(m_rendering_visitor,
-               m_data_provider.provide(data::DataType::Time));
-    m_renderer.render_line(RenderLineOptions{ .xs = 600,
-                                              .ys = 100,
-                                              .xe = 600,
-                                              .ye = 500,
-                                              .width = 4,
-                                              .color = Colors::Delimiter });
+    m_rendering_visitor.set_offset({ 0, 20 });
+    auto time_width = std::visit(m_rendering_visitor,
+                                 m_data_provider.provide(data::DataType::Time));
+    m_rendering_visitor.set_offset({ time_width * 15 / 10, 20 });
     std::visit(m_rendering_visitor,
                m_data_provider.provide(data::DataType::Battery));
+    m_rendering_visitor.set_offset(
+        { time_width * 15 / 10, 20 + m_renderer.default_font_size() * 2 });
     std::visit(m_rendering_visitor,
                m_data_provider.provide(data::DataType::Cpu));
+    m_rendering_visitor.set_offset(
+        { time_width * 15 / 10, 20 + m_renderer.default_font_size() * 2 });
     std::visit(m_rendering_visitor,
                m_data_provider.provide(data::DataType::Ram));
+    m_rendering_visitor.set_offset(
+        { time_width * 15 / 10, 20 + m_renderer.default_font_size() * 6 });
     std::visit(m_rendering_visitor,
                m_data_provider.provide(data::DataType::Drive));
+
+    m_renderer.render_line(RenderLineOptions{ .xs = time_width * 12 / 10,
+                                              .ys = 20,
+                                              .xe = time_width * 12 / 10,
+                                              .ye = 300,
+                                              .width = 10,
+                                              .color = Colors::Delimiter });
   }
 
   bool StatusBarWindow::closed() const noexcept { return WindowShouldClose(); }

@@ -1,4 +1,5 @@
 #pragma once
+#include <tuple>
 
 namespace std {
   struct monostate;
@@ -25,9 +26,14 @@ namespace ymwm::ui {
     [[maybe_unused]] int operator()(const data::Battery& d) const noexcept;
     [[maybe_unused]] int operator()(const std::monostate&) const noexcept;
 
+    inline void set_offset(std::tuple<int, int>&& offset) noexcept {
+      m_offset = offset;
+    }
+
     ~DataRenderingVisitor();
 
   private:
     const Renderer& m_renderer;
+    std::tuple<int, int> m_offset;
   };
 } // namespace ymwm::ui
