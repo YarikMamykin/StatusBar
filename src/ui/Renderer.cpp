@@ -40,7 +40,8 @@ namespace ymwm::ui::prv {
 
 namespace ymwm::ui {
 
-  Renderer::Renderer() {
+  Renderer::Renderer()
+      : m_font_spacing{ 2.0f } {
     m_colors.at(static_cast<std::size_t>(Colors::Background)) =
         Color{ 0x0c, 0x0c, 0x0c, 255 };
     m_colors.at(static_cast<std::size_t>(Colors::Regular)) =
@@ -57,6 +58,13 @@ namespace ymwm::ui {
         Color{ 0, 0, 255, 255 };
 
     load_icons();
+    m_font_regular = LoadFontEx("/usr/share/fonts/TTF/RobotoMono-Regular.ttf",
+                                default_font_size(),
+                                nullptr,
+                                0);
+
+    m_font_bold =
+        LoadFontEx("/usr/share/fonts/TTF/RobotoMono-Bold.ttf", 150, nullptr, 0);
   }
 
   void Renderer::render_background(Colors color) const noexcept {
@@ -65,11 +73,15 @@ namespace ymwm::ui {
 
   void Renderer::render_text(std::string&& txt,
                              const RenderTextOptions& options) const noexcept {
-    DrawText(txt.c_str(),
-             options.x,
-             options.y,
-             options.font_size,
-             raylib_color(options.color));
+    DrawTextEx(options.font_type == RenderFontType::Regular ? m_font_regular
+                                                            : m_font_bold,
+               txt.c_str(),
+               { static_cast<float>(options.x), static_cast<float>(options.y) },
+               options.font_type == RenderFontType::Regular
+                   ? default_font_size()
+                   : 150,
+               m_font_spacing,
+               raylib_color(options.color));
   }
 
   void Renderer::render_icon(Icons icon,
@@ -91,14 +103,22 @@ namespace ymwm::ui {
   }
 
   int Renderer::rendered_text_width(const std::string& txt,
-                                    int font_size) const noexcept {
-    return MeasureText(txt.c_str(), font_size);
+                                    RenderFontType font_type) const noexcept {
+    return MeasureTextEx(
+               font_type == RenderFontType::Regular ? m_font_regular
+                                                    : m_font_bold,
+               txt.c_str(),
+               font_type == RenderFontType::Regular ? default_font_size() : 150,
+               m_font_spacing)
+        .x;
   }
 
   Renderer::~Renderer() {
     std::for_each(m_icons.begin(), m_icons.end(), [](const Texture2D& texture) {
       UnloadTexture(texture);
     });
+    UnloadFont(m_font_regular);
+    UnloadFont(m_font_bold);
   }
 
   void Renderer::load_icons() noexcept {

@@ -9,11 +9,14 @@
 
 namespace ymwm::ui {
 
+  enum class RenderFontType { Regular, Big };
+
   struct RenderTextOptions {
     int x{ 0 };
     int y{ 0 };
     int font_size{ 10 };
     Colors color{ Colors::Regular };
+    RenderFontType font_type{ RenderFontType::Regular };
   };
 
   struct RenderIconOptions {
@@ -41,7 +44,7 @@ namespace ymwm::ui {
     void render_line(const RenderLineOptions& options) const noexcept;
 
     int rendered_text_width(const std::string& txt,
-                            int font_size) const noexcept;
+                            RenderFontType font_type) const noexcept;
 
     inline constexpr int default_font_size() const noexcept { return 48; }
 
@@ -68,5 +71,8 @@ namespace ymwm::ui {
   private:
     std::array<Color, 7ul> m_colors;
     std::array<Texture2D, 14ul> m_icons;
+    Font m_font_regular;
+    Font m_font_bold;
+    const float m_font_spacing;
   };
 } // namespace ymwm::ui
