@@ -22,5 +22,6 @@ namespace ymwm::ui {
     WindowHandler m_handler;
     Renderer m_renderer;
     DataRenderingVisitor m_rendering_visitor;
+    RenderMeasuringVisitor m_measuring_visitor;
   };
 } // namespace ymwm::ui

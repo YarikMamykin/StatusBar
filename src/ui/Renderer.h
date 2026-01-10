@@ -45,6 +45,11 @@ namespace ymwm::ui {
 
     inline constexpr int default_font_size() const noexcept { return 48; }
 
+    inline constexpr int icon_size() const noexcept {
+      // Size of icon calculated by original size (64)  * scaling factor (0.75)
+      return 64 * icon_scaling_factor() / 100;
+    }
+
     ~Renderer();
 
   private:
@@ -55,6 +60,8 @@ namespace ymwm::ui {
     inline const Texture2D& raylib_icon(Icons icon) const noexcept {
       return m_icons.at(static_cast<std::size_t>(icon));
     }
+
+    inline constexpr int icon_scaling_factor() const noexcept { return 75; }
 
     void load_icons() noexcept;
 

@@ -78,7 +78,7 @@ namespace ymwm::ui {
         raylib_icon(icon),
         { static_cast<float>(options.x), static_cast<float>(options.y) },
         0.0,
-        0.75f,
+        icon_scaling_factor() / 100.0f,
         raylib_color(Colors::Regular));
   }
 
