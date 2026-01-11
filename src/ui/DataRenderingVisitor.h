@@ -6,6 +6,7 @@ namespace std {
 }
 
 namespace ymwm::data {
+  struct Date;
   struct Time;
   struct Cpu;
   struct Ram;
@@ -19,6 +20,7 @@ namespace ymwm::ui {
   struct DataRenderingVisitor {
     DataRenderingVisitor(const Renderer& renderer);
 
+    void operator()(const data::Date& d) const noexcept;
     void operator()(const data::Time& d) const noexcept;
     void operator()(const data::Cpu& d) const noexcept;
     void operator()(const data::Ram& d) const noexcept;
@@ -41,6 +43,7 @@ namespace ymwm::ui {
   struct RenderMeasuringVisitor {
     RenderMeasuringVisitor(const Renderer& renderer);
 
+    std::tuple<int, int> operator()(const data::Date& d) const noexcept;
     std::tuple<int, int> operator()(const data::Time& d) const noexcept;
     std::tuple<int, int> operator()(const data::Cpu& d) const noexcept;
     std::tuple<int, int> operator()(const data::Ram& d) const noexcept;

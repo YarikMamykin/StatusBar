@@ -14,9 +14,8 @@ namespace ymwm::ui {
       , m_offset({ 0, 0 })
       , m_icon_offset(10) {}
 
-  void DataRenderingVisitor::operator()(const data::Time& d) const noexcept {
+  void DataRenderingVisitor::operator()(const data::Date& d) const noexcept {
     const std::string mock_date{ "Fri Jan  2 EET 2026" };
-    const std::string mock_time{ "05:26:14 PM" };
     const auto& [x, y] = m_offset;
 
     m_renderer.render_text(mock_date.c_str(),
@@ -24,10 +23,16 @@ namespace ymwm::ui {
                              .y = y,
                              .font_type = RenderFontType::Regular,
                              .color = Colors::Regular });
+  }
+
+  void DataRenderingVisitor::operator()(const data::Time& d) const noexcept {
+    const std::string mock_time{ "05:26:14 PM" };
+    const auto& [x, y] = m_offset;
+
     m_renderer.render_text(mock_time.c_str(),
                            {
                                .x = x,
-                               .y = y + 48 + 15,
+                               .y = y + 15,
                                .font_type = RenderFontType::Big,
                                .color = Colors::Regular,
                            });
@@ -114,11 +119,19 @@ namespace ymwm::ui {
   {}
 
   std::tuple<int, int>
-  RenderMeasuringVisitor::operator()(const data::Time& d) const noexcept {
+  RenderMeasuringVisitor::operator()(const data::Date& d) const noexcept {
     const std::string mock_date{ "Fri Jan  2 EET 2026" };
+    int height = 48 + 15;
+    int width = m_renderer.rendered_text_width(mock_date.c_str(),
+                                               RenderFontType::Regular);
+    return { width, height };
+  }
+
+  std::tuple<int, int>
+  RenderMeasuringVisitor::operator()(const data::Time& d) const noexcept {
     const std::string mock_time{ "05:26:14 PM" };
 
-    int height = 48 * 3 + 15;
+    int height = 48 * 2 + 15;
     int width =
         m_renderer.rendered_text_width(mock_time.c_str(), RenderFontType::Big);
     return { width, height };

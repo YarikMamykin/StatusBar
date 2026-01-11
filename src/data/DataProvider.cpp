@@ -14,6 +14,8 @@ namespace ymwm::data {
       return Cpu{};
     case data::DataType::Ram:
       return Ram{};
+    case data::DataType::Date:
+      return Date{};
     case data::DataType::Time:
       return Time{};
     case data::DataType::Drive:
