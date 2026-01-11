@@ -1,21 +1,20 @@
 #pragma once
 
+#include "ColorProvider.h"
 #include "Colors.h"
-#include "Icons.h"
-#include "ui/RaylibFont.h"
+#include "FontProvider.h"
+#include "FontType.h"
+#include "IconProvider.h"
 
-#include <array>
 #include <raylib.h>
 #include <string>
 
 namespace ymwm::ui {
 
-  enum class RenderFontType { Regular, Big };
-
   struct RenderTextOptions {
     int x{ 0 };
     int y{ 0 };
-    RenderFontType font_type{ RenderFontType::Regular };
+    FontType font_type{ FontType::Regular };
     Colors color{ Colors::Regular };
   };
 
@@ -44,7 +43,7 @@ namespace ymwm::ui {
     void render_line(const RenderLineOptions& options) const noexcept;
 
     int rendered_text_width(const std::string& txt,
-                            RenderFontType font_type) const noexcept;
+                            FontType font_type) const noexcept;
 
     inline constexpr int icon_size() const noexcept {
       // Size of icon calculated by original size (64) * scaling factor (0.75)
@@ -54,23 +53,11 @@ namespace ymwm::ui {
     ~Renderer();
 
   private:
-    inline const Color& raylib_color(Colors color) const noexcept {
-      return m_colors.at(static_cast<std::size_t>(color));
-    }
-
-    inline const Texture2D& raylib_icon(Icons icon) const noexcept {
-      return m_icons.at(static_cast<std::size_t>(icon));
-    }
-
     inline constexpr int icon_scaling_factor() const noexcept { return 75; }
 
-    void load_icons() noexcept;
-
   private:
-    std::array<Color, 7ul> m_colors;
-    std::array<Texture2D, 14ul> m_icons;
-    RaylibFont m_font_regular;
-    RaylibFont m_font_big;
-    const float m_font_spacing;
+    ColorProvider m_color_provider;
+    IconProvider m_icon_provider;
+    FontProvider m_font_provider;
   };
 } // namespace ymwm::ui

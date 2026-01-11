@@ -21,7 +21,7 @@ namespace ymwm::ui {
     m_renderer.render_text(mock_date.c_str(),
                            { .x = x,
                              .y = y,
-                             .font_type = RenderFontType::Regular,
+                             .font_type = FontType::Regular,
                              .color = Colors::Regular });
   }
 
@@ -33,7 +33,7 @@ namespace ymwm::ui {
                            {
                                .x = x,
                                .y = y + 15,
-                               .font_type = RenderFontType::Big,
+                               .font_type = FontType::Big,
                                .color = Colors::Regular,
                            });
   }
@@ -44,13 +44,13 @@ namespace ymwm::ui {
     m_renderer.render_text(mock_cpudata.c_str(),
                            { .x = x,
                              .y = y,
-                             .font_type = RenderFontType::Regular,
+                             .font_type = FontType::Regular,
                              .color = Colors::Regular });
     m_renderer.render_icon(Icons::Cpu,
                            {
                                .x = x + m_icon_offset +
                                     m_renderer.rendered_text_width(
-                                        mock_cpudata, RenderFontType::Regular),
+                                        mock_cpudata, FontType::Regular),
                                .y = y,
                            });
   }
@@ -61,13 +61,13 @@ namespace ymwm::ui {
     m_renderer.render_text(mock_ramdata.c_str(),
                            { .x = x,
                              .y = y,
-                             .font_type = RenderFontType::Regular,
+                             .font_type = FontType::Regular,
                              .color = Colors::Regular });
     m_renderer.render_icon(Icons::Ram,
                            {
                                .x = x + m_icon_offset +
                                     m_renderer.rendered_text_width(
-                                        mock_ramdata, RenderFontType::Regular),
+                                        mock_ramdata, FontType::Regular),
                                .y = y,
                            });
   }
@@ -78,16 +78,15 @@ namespace ymwm::ui {
     m_renderer.render_text(mock_drivedata.c_str(),
                            { .x = x,
                              .y = y,
-                             .font_type = RenderFontType::Regular,
+                             .font_type = FontType::Regular,
                              .color = Colors::Regular });
-    m_renderer.render_icon(
-        Icons::Drive,
-        {
-            .x = x + m_icon_offset +
-                 m_renderer.rendered_text_width(mock_drivedata,
-                                                RenderFontType::Regular),
-            .y = y,
-        });
+    m_renderer.render_icon(Icons::Drive,
+                           {
+                               .x = x + m_icon_offset +
+                                    m_renderer.rendered_text_width(
+                                        mock_drivedata, FontType::Regular),
+                               .y = y,
+                           });
   }
 
   void DataRenderingVisitor::operator()(const data::Battery& d) const noexcept {
@@ -96,13 +95,13 @@ namespace ymwm::ui {
     m_renderer.render_text(mock_batdata.c_str(),
                            { .x = x,
                              .y = y,
-                             .font_type = RenderFontType::Regular,
+                             .font_type = FontType::Regular,
                              .color = Colors::Regular });
     m_renderer.render_icon(Icons::FullBat,
                            {
                                .x = x + m_icon_offset +
                                     m_renderer.rendered_text_width(
-                                        mock_batdata, RenderFontType::Regular),
+                                        mock_batdata, FontType::Regular),
                                .y = y,
                            });
   }
@@ -122,8 +121,8 @@ namespace ymwm::ui {
   RenderMeasuringVisitor::operator()(const data::Date& d) const noexcept {
     const std::string mock_date{ "Fri Jan  2 EET 2026" };
     int height = 48 + 15;
-    int width = m_renderer.rendered_text_width(mock_date.c_str(),
-                                               RenderFontType::Regular);
+    int width =
+        m_renderer.rendered_text_width(mock_date.c_str(), FontType::Regular);
     return { width, height };
   }
 
@@ -133,15 +132,15 @@ namespace ymwm::ui {
 
     int height = 48 * 2 + 15;
     int width =
-        m_renderer.rendered_text_width(mock_time.c_str(), RenderFontType::Big);
+        m_renderer.rendered_text_width(mock_time.c_str(), FontType::Big);
     return { width, height };
   }
 
   std::tuple<int, int>
   RenderMeasuringVisitor::operator()(const data::Cpu& d) const noexcept {
     const std::string mock_cpudata{ "75%" };
-    int width = m_renderer.rendered_text_width(mock_cpudata.c_str(),
-                                               RenderFontType::Regular);
+    int width =
+        m_renderer.rendered_text_width(mock_cpudata.c_str(), FontType::Regular);
     width += m_icon_offset;
     int height = std::max(m_renderer.icon_size(), 48);
     return { width, height };
@@ -150,8 +149,8 @@ namespace ymwm::ui {
   std::tuple<int, int>
   RenderMeasuringVisitor::operator()(const data::Ram& d) const noexcept {
     const std::string mock_ramdata{ "25%" };
-    int width = m_renderer.rendered_text_width(mock_ramdata.c_str(),
-                                               RenderFontType::Regular);
+    int width =
+        m_renderer.rendered_text_width(mock_ramdata.c_str(), FontType::Regular);
     width += m_icon_offset;
     int height = std::max(m_renderer.icon_size(), 48);
     return { width, height };
@@ -161,7 +160,7 @@ namespace ymwm::ui {
   RenderMeasuringVisitor::operator()(const data::Drive& d) const noexcept {
     const std::string mock_drivedata{ "34%" };
     int width = m_renderer.rendered_text_width(mock_drivedata.c_str(),
-                                               RenderFontType::Regular);
+                                               FontType::Regular);
     width += m_icon_offset;
     int height = std::max(m_renderer.icon_size(), 48);
     return { width, height };
@@ -170,8 +169,8 @@ namespace ymwm::ui {
   std::tuple<int, int>
   RenderMeasuringVisitor::operator()(const data::Battery& d) const noexcept {
     const std::string mock_batdata{ "34%" };
-    int width = m_renderer.rendered_text_width(mock_batdata.c_str(),
-                                               RenderFontType::Regular);
+    int width =
+        m_renderer.rendered_text_width(mock_batdata.c_str(), FontType::Regular);
     width += m_icon_offset;
     int height = std::max(m_renderer.icon_size(), 48);
     return { width, height };

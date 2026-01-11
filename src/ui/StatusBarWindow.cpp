@@ -23,7 +23,6 @@ namespace ymwm::ui {
 
   void StatusBarWindow::render() noexcept {
     prv::DrawingContext ctx;
-    // SetTextLineSpacing(10);
     int window_width = GetRenderWidth();
     int window_height = GetRenderHeight();
 
@@ -59,7 +58,8 @@ namespace ymwm::ui {
                                 std::get<1>(initial_offset) };
 
     m_rendering_visitor.set_offset(
-        { date_width + 60 + cpu_width, std::get<1>(initial_offset) });
+        { window_center_x - ((date_width + 60 + cpu_width) / 2),
+          std::get<1>(initial_offset) });
     std::visit(m_rendering_visitor,
                m_data_provider.provide(data::DataType::Date));
     m_rendering_visitor.set_offset(

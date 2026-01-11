@@ -8,7 +8,7 @@ namespace ymwm::ui {
   struct RaylibFont {
     RaylibFont(std::filesystem::path&& font_path, int font_size);
 
-    inline const Font& handler() const noexcept { return m_font; }
+    inline operator const Font&() const noexcept { return m_font; }
     inline int size() const noexcept { return m_font_size; }
 
     ~RaylibFont();
