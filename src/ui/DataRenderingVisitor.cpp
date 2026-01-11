@@ -22,14 +22,14 @@ namespace ymwm::ui {
     m_renderer.render_text(mock_date.c_str(),
                            { .x = x,
                              .y = y,
-                             .font_size = m_renderer.default_font_size(),
+                             .font_type = RenderFontType::Regular,
                              .color = Colors::Regular });
     m_renderer.render_text(mock_time.c_str(),
                            {
                                .x = x,
-                               .y = y + m_renderer.default_font_size() + 15,
-                               .color = Colors::Regular,
+                               .y = y + 48 + 15,
                                .font_type = RenderFontType::Big,
+                               .color = Colors::Regular,
                            });
   }
 
@@ -39,7 +39,7 @@ namespace ymwm::ui {
     m_renderer.render_text(mock_cpudata.c_str(),
                            { .x = x,
                              .y = y,
-                             .font_size = m_renderer.default_font_size(),
+                             .font_type = RenderFontType::Regular,
                              .color = Colors::Regular });
     m_renderer.render_icon(Icons::Cpu,
                            {
@@ -56,7 +56,7 @@ namespace ymwm::ui {
     m_renderer.render_text(mock_ramdata.c_str(),
                            { .x = x,
                              .y = y,
-                             .font_size = m_renderer.default_font_size(),
+                             .font_type = RenderFontType::Regular,
                              .color = Colors::Regular });
     m_renderer.render_icon(Icons::Ram,
                            {
@@ -73,7 +73,7 @@ namespace ymwm::ui {
     m_renderer.render_text(mock_drivedata.c_str(),
                            { .x = x,
                              .y = y,
-                             .font_size = m_renderer.default_font_size(),
+                             .font_type = RenderFontType::Regular,
                              .color = Colors::Regular });
     m_renderer.render_icon(
         Icons::Drive,
@@ -91,7 +91,7 @@ namespace ymwm::ui {
     m_renderer.render_text(mock_batdata.c_str(),
                            { .x = x,
                              .y = y,
-                             .font_size = m_renderer.default_font_size(),
+                             .font_type = RenderFontType::Regular,
                              .color = Colors::Regular });
     m_renderer.render_icon(Icons::FullBat,
                            {
@@ -118,7 +118,7 @@ namespace ymwm::ui {
     const std::string mock_date{ "Fri Jan  2 EET 2026" };
     const std::string mock_time{ "05:26:14 PM" };
 
-    int height = m_renderer.default_font_size() * 3 + 15;
+    int height = 48 * 3 + 15;
     int width =
         m_renderer.rendered_text_width(mock_time.c_str(), RenderFontType::Big);
     return { width, height };
@@ -130,8 +130,7 @@ namespace ymwm::ui {
     int width = m_renderer.rendered_text_width(mock_cpudata.c_str(),
                                                RenderFontType::Regular);
     width += m_icon_offset;
-    int height =
-        std::max(m_renderer.icon_size(), m_renderer.default_font_size());
+    int height = std::max(m_renderer.icon_size(), 48);
     return { width, height };
   }
 
@@ -141,8 +140,7 @@ namespace ymwm::ui {
     int width = m_renderer.rendered_text_width(mock_ramdata.c_str(),
                                                RenderFontType::Regular);
     width += m_icon_offset;
-    int height =
-        std::max(m_renderer.icon_size(), m_renderer.default_font_size());
+    int height = std::max(m_renderer.icon_size(), 48);
     return { width, height };
   }
 
@@ -152,8 +150,7 @@ namespace ymwm::ui {
     int width = m_renderer.rendered_text_width(mock_drivedata.c_str(),
                                                RenderFontType::Regular);
     width += m_icon_offset;
-    int height =
-        std::max(m_renderer.icon_size(), m_renderer.default_font_size());
+    int height = std::max(m_renderer.icon_size(), 48);
     return { width, height };
   }
 
@@ -163,8 +160,7 @@ namespace ymwm::ui {
     int width = m_renderer.rendered_text_width(mock_batdata.c_str(),
                                                RenderFontType::Regular);
     width += m_icon_offset;
-    int height =
-        std::max(m_renderer.icon_size(), m_renderer.default_font_size());
+    int height = std::max(m_renderer.icon_size(), 48);
     return { width, height };
   }
 
