@@ -2,7 +2,10 @@
 
 #include "Colors.h"
 #include "Icons.h"
-#include "ui/RaylibFont.h"
+#include "RaylibFont.h"
+#include "RenderIconOptions.h"
+#include "RenderLineOptions.h"
+#include "RenderTextOptions.h"
 
 #include <raylib.h>
 

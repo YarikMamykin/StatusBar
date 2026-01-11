@@ -11,26 +11,9 @@
 
 namespace ymwm::ui {
 
-  struct RenderTextOptions {
-    int x{ 0 };
-    int y{ 0 };
-    FontType font_type{ FontType::Regular };
-    Colors color{ Colors::Regular };
-  };
-
-  struct RenderIconOptions {
-    int x{ 0 };
-    int y{ 0 };
-  };
-
-  struct RenderLineOptions {
-    int xs{ 0 };
-    int ys{ 0 };
-    int xe{ 0 };
-    int ye{ 0 };
-    int width{ 0 };
-    Colors color{ Colors::Regular };
-  };
+  struct RenderTextOptions;
+  struct RenderIconOptions;
+  struct RenderLineOptions;
 
   struct Renderer {
     Renderer();
@@ -60,4 +43,5 @@ namespace ymwm::ui {
     IconProvider m_icon_provider;
     FontProvider m_font_provider;
   };
+
 } // namespace ymwm::ui

@@ -1,8 +1,9 @@
 #pragma once
 
+#include "DataRenderingVisitor.h"
+#include "RenderMeasuringVisitor.h"
 #include "Renderer.h"
 #include "WindowHandler.h"
-#include "ui/DataRenderingVisitor.h"
 
 namespace ymwm::data {
   struct DataProvider;

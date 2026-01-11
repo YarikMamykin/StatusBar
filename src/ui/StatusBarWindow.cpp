@@ -1,10 +1,11 @@
 #include "StatusBarWindow.h"
 
 #include "Colors.h"
+#include "DataRenderingVisitor.h"
+#include "RenderLineOptions.h"
+#include "Renderer.h"
 #include "data/DataProvider.h"
 #include "data/DataType.h"
-#include "ui/DataRenderingVisitor.h"
-#include "ui/Renderer.h"
 
 #include <raylib.h>
 

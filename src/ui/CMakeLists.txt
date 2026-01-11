@@ -3,6 +3,7 @@ add_library(ui OBJECT
 	${CMAKE_CURRENT_SOURCE_DIR}/Renderer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/WindowHandler.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/DataRenderingVisitor.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/RenderMeasuringVisitor.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/RaylibFont.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/RaylibIcon.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/IconProvider.cpp
