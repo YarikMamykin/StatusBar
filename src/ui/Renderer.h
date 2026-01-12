@@ -33,6 +33,10 @@ namespace ymwm::ui {
       return 64 * icon_scaling_factor() / 100;
     }
 
+    inline constexpr int font_size(FontType font_type) const noexcept {
+      return m_font_provider.font(font_type).size();
+    }
+
     ~Renderer();
 
   private:

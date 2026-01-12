@@ -3,7 +3,7 @@
 namespace ymwm::ui {
   FontProvider::FontProvider()
       : m_font_regular("/usr/share/fonts/TTF/RobotoMono-Regular.ttf", 48)
-      , m_font_big("/usr/share/fonts/TTF/RobotoMono-Bold.ttf", 96)
+      , m_font_big("/usr/share/fonts/TTF/RobotoMono-Bold.ttf", 48 * 3)
       , m_font_spacing{ 2.0f } {}
 
   const RaylibFont& FontProvider::font(FontType font_type) const noexcept {
