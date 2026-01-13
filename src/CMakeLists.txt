@@ -7,7 +7,6 @@ add_subdirectory(lifecycle)
 
 add_executable(${PROJECT_NAME} main.cpp)
 add_dependencies(${PROJECT_NAME}
-	raylib
 	data
 	ui
 	lifecycle
@@ -15,11 +14,9 @@ add_dependencies(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME}
 	PRIVATE
 	${TARGET_INCLUDE_DIRECTORY}
-	${RAYLIB_INCLUDE_DIR}
 )
 target_link_libraries(${PROJECT_NAME} 
 	PRIVATE 
-	raylib
 	data
 	ui
 	lifecycle

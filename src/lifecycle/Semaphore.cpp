@@ -32,8 +32,6 @@ namespace ymwm::lifecycle {
     }
   }
 
-  void Semaphore::wait() noexcept { sem_wait(m_semaphore); }
-
   bool Semaphore::created() const noexcept { return m_created; }
 
   bool Semaphore::opened() const noexcept { return m_opened; }

@@ -5,3 +5,11 @@ add_library(lifecycle OBJECT
 target_include_directories(lifecycle PRIVATE
 	${TARGET_INCLUDE_DIRECTORY}
 )
+target_link_libraries(lifecycle PUBLIC
+	ui
+	data
+)
+add_dependencies(lifecycle 
+	ui
+	data
+)
