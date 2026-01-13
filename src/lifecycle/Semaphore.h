@@ -4,12 +4,14 @@
 
 namespace ymwm::lifecycle {
 
+  enum class SemaphoreLockedStatus { Locked, Free };
+
   struct Semaphore {
     Semaphore();
     ~Semaphore();
 
     void post() noexcept;
-    void wait() noexcept;
+    SemaphoreLockedStatus locked() noexcept;
 
     bool created() const noexcept;
     bool opened() const noexcept;
