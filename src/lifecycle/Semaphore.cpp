@@ -6,7 +6,7 @@
 
 namespace ymwm::lifecycle {
   Semaphore::Semaphore()
-      : m_name{ "/ymwm-sb-semaphore" }
+      : m_name{ "/ymwm-cp-semaphore" }
       , m_created{ false }
       , m_opened{ false }
       , m_semaphore{ nullptr } {

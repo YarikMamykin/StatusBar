@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.31)
 
-project(YMWM-SB VERSION 0.3.0 LANGUAGES CXX)
+project(YMWM-CP VERSION 0.3.1 LANGUAGES CXX)
 
 set(CMAKE_C_COMPILER clang)
 set(CMAKE_CXX_COMPILER clang++)
