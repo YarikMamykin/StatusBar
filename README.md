@@ -1,2 +1,3 @@
-# StatusBar
-Status bar for YMWM desktop
+# ControlPanel
+
+Control panel for YMWM desktop
