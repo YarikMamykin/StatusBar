@@ -16,10 +16,10 @@ namespace ymwm::ui {
       , m_icon_offset(10) {}
 
   void DataRenderingVisitor::operator()(const data::Date& d) const noexcept {
-    const std::string mock_date{ "Fri Jan  2 EET 2026" };
+    std::string date = std::format("{:%a %b %e %Z %Y}", d.data);
     const auto& [x, y] = m_offset;
 
-    m_renderer.render_text(mock_date.c_str(),
+    m_renderer.render_text(date.c_str(),
                            RenderTextOptions{ .x = x,
                                               .y = y,
                                               .font_type = FontType::Regular,
@@ -27,10 +27,10 @@ namespace ymwm::ui {
   }
 
   void DataRenderingVisitor::operator()(const data::Time& d) const noexcept {
-    const std::string mock_time{ "05:26:14 PM" };
+    std::string time = std::format("{:%H:%M:%OS %p}", d.data);
     const auto& [x, y] = m_offset;
 
-    m_renderer.render_text(mock_time.c_str(),
+    m_renderer.render_text(time.c_str(),
                            RenderTextOptions{
                                .x = x,
                                .y = y + 15,
@@ -40,71 +40,77 @@ namespace ymwm::ui {
   }
 
   void DataRenderingVisitor::operator()(const data::Cpu& d) const noexcept {
-    const std::string mock_cpudata{ "75%" };
+    std::string data =
+        std::to_string(static_cast<unsigned int>(*d.cores_load_lvl.begin())) +
+        "%";
     const auto& [x, y] = m_offset;
-    m_renderer.render_text(mock_cpudata.c_str(),
+    m_renderer.render_text(data.c_str(),
                            RenderTextOptions{ .x = x,
                                               .y = y,
                                               .font_type = FontType::Regular,
                                               .color = Colors::Regular });
-    m_renderer.render_icon(Icons::Cpu,
-                           RenderIconOptions{
-                               .x = x + m_icon_offset +
-                                    m_renderer.rendered_text_width(
-                                        mock_cpudata, FontType::Regular),
-                               .y = y,
-                           });
+    m_renderer.render_icon(
+        Icons::Cpu,
+        RenderIconOptions{
+            .x = x + m_icon_offset +
+                 m_renderer.rendered_text_width(data, FontType::Regular),
+            .y = y,
+        });
   }
 
   void DataRenderingVisitor::operator()(const data::Ram& d) const noexcept {
-    const std::string mock_ramdata{ "25%" };
+    std::string data = std::to_string(d.level) + "%";
     const auto& [x, y] = m_offset;
-    m_renderer.render_text(mock_ramdata.c_str(),
+    m_renderer.render_text(data.c_str(),
                            RenderTextOptions{ .x = x,
                                               .y = y,
                                               .font_type = FontType::Regular,
                                               .color = Colors::Regular });
-    m_renderer.render_icon(Icons::Ram,
-                           RenderIconOptions{
-                               .x = x + m_icon_offset +
-                                    m_renderer.rendered_text_width(
-                                        mock_ramdata, FontType::Regular),
-                               .y = y,
-                           });
+    m_renderer.render_icon(
+        Icons::Ram,
+        RenderIconOptions{
+            .x = x + m_icon_offset +
+                 m_renderer.rendered_text_width(data, FontType::Regular),
+            .y = y,
+        });
   }
 
   void DataRenderingVisitor::operator()(const data::Drive& d) const noexcept {
-    const std::string mock_drivedata{ "34%" };
+    std::string data = std::to_string(d.level) + "%";
     const auto& [x, y] = m_offset;
-    m_renderer.render_text(mock_drivedata.c_str(),
+    m_renderer.render_text(data.c_str(),
                            RenderTextOptions{ .x = x,
                                               .y = y,
                                               .font_type = FontType::Regular,
                                               .color = Colors::Regular });
-    m_renderer.render_icon(Icons::Drive,
-                           RenderIconOptions{
-                               .x = x + m_icon_offset +
-                                    m_renderer.rendered_text_width(
-                                        mock_drivedata, FontType::Regular),
-                               .y = y,
-                           });
+    m_renderer.render_icon(
+        Icons::Drive,
+        RenderIconOptions{
+            .x = x + m_icon_offset +
+                 m_renderer.rendered_text_width(data, FontType::Regular),
+            .y = y,
+        });
   }
 
   void DataRenderingVisitor::operator()(const data::Battery& d) const noexcept {
-    const std::string mock_batdata{ "34%" };
+    if (d.status == data::Battery::BatteryStatus::NO_BATTERY) {
+      return;
+    }
+
+    std::string data = std::to_string(d.level) + "%";
     const auto& [x, y] = m_offset;
-    m_renderer.render_text(mock_batdata.c_str(),
+    m_renderer.render_text(data.c_str(),
                            RenderTextOptions{ .x = x,
                                               .y = y,
                                               .font_type = FontType::Regular,
                                               .color = Colors::Regular });
-    m_renderer.render_icon(Icons::FullBat,
-                           RenderIconOptions{
-                               .x = x + m_icon_offset +
-                                    m_renderer.rendered_text_width(
-                                        mock_batdata, FontType::Regular),
-                               .y = y,
-                           });
+    m_renderer.render_icon(
+        Icons::FullBat,
+        RenderIconOptions{
+            .x = x + m_icon_offset +
+                 m_renderer.rendered_text_width(data, FontType::Regular),
+            .y = y,
+        });
   }
 
   void DataRenderingVisitor::operator()(const std::monostate&) const noexcept {}
