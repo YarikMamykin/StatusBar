@@ -6,11 +6,11 @@
 namespace ymwm::data {
 
   struct Date {
-    std::chrono::system_clock::time_point data;
+    std::chrono::zoned_time<std::chrono::system_clock::duration> data;
   };
 
   struct Time {
-    std::chrono::system_clock::time_point data;
+    std::chrono::zoned_time<std::chrono::system_clock::duration> data;
   };
 
   struct Cpu {
