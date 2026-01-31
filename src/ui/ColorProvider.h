@@ -15,6 +15,7 @@ namespace ymwm::ui {
   private:
     Color m_background;
     Color m_regular;
+    Color m_regular_bat;
     Color m_alert;
     Color m_warning;
     Color m_charging;

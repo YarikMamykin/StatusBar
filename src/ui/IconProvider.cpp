@@ -550,7 +550,7 @@ namespace ymwm::ui {
                    color_provider.color(Colors::Charged))
       , m_bat_normal(icons::battery.data(),
                      icons::battery.size(),
-                     color_provider.color(Colors::Regular))
+                     color_provider.color(Colors::RegularBat))
       , m_bat_half(icons::half_battery.data(),
                    icons::half_battery.size(),
                    color_provider.color(Colors::Warning))
